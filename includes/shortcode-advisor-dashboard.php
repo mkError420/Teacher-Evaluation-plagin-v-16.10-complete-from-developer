@@ -390,7 +390,7 @@ function tes_render_advisor_dashboard_content($current_advisor, $logout_url) {
                             $chart_data[] = isset($answer_counts[$q->id][$opt]) ? intval($answer_counts[$q->id][$opt]) : 0;
                         }
                         ?>
-                        <div style="margin-bottom:25px; padding:15px; border:1px solid #ddd; background: #fff;">
+                        <div style="margin-bottom:25px; padding:15px; border:1px solid #ddd; background: #fff; page-break-inside: avoid; page-break-after: always;">
                             <strong style="font-size: 1.1em;"><?php echo esc_html($q->sub_question_title ? $q->sub_question_title : $q->question_text); ?></strong>
                             <?php if ($q->sub_question_title && $q->question_text && $q->sub_question_title !== $q->question_text): ?>
                                 <div style="font-size: 0.9em; color: #666; margin-top: 5px; font-style: italic;"><?php echo esc_html($q->question_text); ?></div>
@@ -400,25 +400,28 @@ function tes_render_advisor_dashboard_content($current_advisor, $logout_url) {
                                 <p><strong>Average Rating: <?php echo number_format($avg, 2); ?> / 5</strong></p>
                             <?php endif; ?>
 
-                            <table style="width: 100%; border-collapse: collapse; margin-top: 10px; border: 1px solid #e5e5e5;">
-                                <thead>
-                                    <tr style="background: #f8f9fa; border-bottom: 1px solid #e5e5e5;">
-                                        <th style="padding: 10px; text-align: left; color: #32373c;">Option</th>
-                                        <th style="padding: 10px; text-align: left; color: #32373c;">Responses</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($options as $opt): ?>
-                                        <tr style="border-bottom: 1px solid #f0f0f0;">
-                                            <td style="padding: 10px;"><?php echo esc_html($opt); ?></td>
-                                            <td style="padding: 10px;"><?php echo isset($answer_counts[$q->id][$opt]) ? intval($answer_counts[$q->id][$opt]) : 0; ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-
-                            <div style="max-width: 300px; margin: 20px auto;">
-                                <canvas id="chart-<?php echo $q->id; ?>"></canvas>
+                            <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; margin-top: 15px;">
+                                <div style="flex: 1; min-width: 300px;">
+                                    <table style="width: 100%; border-collapse: collapse; border: 1px solid #e5e5e5; font-size: 13px;">
+                                        <thead>
+                                            <tr style="background: #f8f9fa; border-bottom: 1px solid #e5e5e5;">
+                                                <th style="padding: 8px; text-align: left; color: #32373c;">Option</th>
+                                                <th style="padding: 8px; text-align: left; color: #32373c;">Responses</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($options as $opt): ?>
+                                                <tr style="border-bottom: 1px solid #f0f0f0;">
+                                                    <td style="padding: 8px;"><?php echo esc_html($opt); ?></td>
+                                                    <td style="padding: 8px;"><?php echo isset($answer_counts[$q->id][$opt]) ? intval($answer_counts[$q->id][$opt]) : 0; ?></td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div style="flex: 0 0 200px; max-width: 200px; padding-top: 50px;">
+                                    <canvas id="chart-<?php echo $q->id; ?>"></canvas>
+                                </div>
                             </div>
 
                             <script>
@@ -453,18 +456,18 @@ function tes_render_advisor_dashboard_content($current_advisor, $logout_url) {
 
                 if (!empty($student_averages)): ?>
                     <h2 style="margin-top: 30px; border-bottom: 2px solid #ccc; padding-bottom: 10px; color: #23282d;">Student-wise Average Ratings</h2>
-                    <table style="width: 100%; border-collapse: collapse; margin-top: 10px; border: 1px solid #e5e5e5;">
+                    <table style="width: 100%; max-width: 500px; border-collapse: collapse; margin-top: 10px; border: 1px solid #e5e5e5; font-size: 13px;">
                         <thead>
                             <tr style="background: #f8f9fa; border-bottom: 1px solid #e5e5e5;">
-                                <th style="padding: 10px; text-align: left; color: #32373c;">Student Name</th>
-                                <th style="padding: 10px; text-align: left; color: #32373c;">Average Rating</th>
+                                <th style="padding: 8px; text-align: left; color: #32373c;">Student Name</th>
+                                <th style="padding: 8px; text-align: left; color: #32373c;">Average Rating</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($student_averages as $name => $avg): ?>
                                 <tr style="border-bottom: 1px solid #f0f0f0;">
-                                    <td style="padding: 10px;"><?php echo esc_html($name); ?></td>
-                                    <td style="padding: 10px;"><?php echo number_format($avg, 2); ?> / 5</td>
+                                    <td style="padding: 8px;"><?php echo esc_html($name); ?></td>
+                                    <td style="padding: 8px;"><?php echo number_format($avg, 2); ?> / 5</td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -472,10 +475,10 @@ function tes_render_advisor_dashboard_content($current_advisor, $logout_url) {
                 <?php endif;
 
                 if (!empty($comments)): ?>
-                    <h2 style="margin-top: 30px; border-bottom: 2px solid #ccc; padding-bottom: 10px; color: #23282d;">Student Comments</h2>
-                    <div style="background: #fff; border: 1px solid #ddd; overflow: hidden;">
+                    <h2 style="margin-top: 30px; border-bottom: 2px solid #ccc; padding-bottom: 10px; color: #23282d; page-break-before: always;">Student Comments</h2>
+                    <div>
                         <?php foreach ($comments as $c): ?>
-                            <div style="padding: 15px; border-bottom: 1px solid #eee;">
+                            <div style="padding: 15px; border: 1px solid #ddd; background: #fff; margin-bottom: 10px; page-break-inside: avoid;">
                                 <strong style="display: block; color: #555; margin-bottom: 5px;"><?php echo esc_html($c['student']); ?>:</strong>
                                 <?php echo nl2br(esc_html($c['text'])); ?>
                             </div>
@@ -523,7 +526,8 @@ function tes_render_advisor_dashboard_content($current_advisor, $logout_url) {
                       filename:     '<?php echo esc_js(sanitize_file_name($survey_details->title)); ?>_results.pdf',
                       image:        { type: 'jpeg', quality: 0.98 },
                       html2canvas:  { scale: 2, useCORS: true, logging: false },
-                      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+                      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' },
+                      pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
                     };
                     
                     html2pdf().set(opt).from(element).save().then(function() {

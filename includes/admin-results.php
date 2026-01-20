@@ -244,7 +244,7 @@ function tes_results_page() {
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                    <div style="max-width: 300px; margin: 0 auto;">
+                    <div style="max-width: 250px; margin: 0 auto;">
                         <canvas id="chart-<?php echo $q->id; ?>"></canvas>
                     </div>
                     <script>
