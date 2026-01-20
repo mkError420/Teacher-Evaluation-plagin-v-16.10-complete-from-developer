@@ -476,9 +476,9 @@ function tes_render_advisor_dashboard_content($current_advisor, $logout_url) {
 
                 if (!empty($comments)): ?>
                     <h2 style="margin-top: 30px; border-bottom: 2px solid #ccc; padding-bottom: 10px; color: #23282d; page-break-before: always;">Student Comments</h2>
-                    <div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 15px;">
                         <?php foreach ($comments as $c): ?>
-                            <div style="padding: 15px; border: 1px solid #ddd; background: #fff; margin-bottom: 10px; page-break-inside: avoid;">
+                            <div style="flex: 1 1 48%; min-width: 300px; padding: 15px; border: 1px solid #ddd; background: #fff; page-break-inside: avoid; box-sizing: border-box;">
                                 <strong style="display: block; color: #555; margin-bottom: 5px;"><?php echo esc_html($c['student']); ?>:</strong>
                                 <?php echo nl2br(esc_html($c['text'])); ?>
                             </div>
